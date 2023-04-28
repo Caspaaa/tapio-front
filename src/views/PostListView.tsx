@@ -96,7 +96,7 @@ export function PostList(): JSX.Element {
 				<div className="flex justify-center w-full">
 					<img className="h-32 md:h-44" src={logoTapio} alt="logo-tapio-stories" />
 				</div>
-				<div className="fixed phone-xl:relative left-0 bottom-0 phone-xl:bg-transparent bg-white w-full flex justify-center phone-xl:justify-end py-4 phone-xl:py-0 pr-4">
+				<div className="fixed phone-xl:relative left-0 bottom-0 phone-xl:bg-transparent bg-white w-full flex justify-center phone-xl:justify-end py-4 phone-xl:py-0 phone-xl:pr-4">
 					<button onClick={() => setShowModalTrue()} className="bg-white text-tapio p-2 rounded-full mr-2 duration-200 mr-4 shadow">
 						<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
 							<path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />

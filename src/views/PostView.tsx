@@ -99,7 +99,7 @@ export function PostView(): JSX.Element {
 					</div>
 					<div className="absolute m-auto left-0 right-0 top-[24rem] bg-white w-full phone-xl:w-2/3 sm:w-2/3 px-6 py-4 sm:px-10 md:py-6 xl:px-20 phone-xl:rounded-3xl">
 						<div className="py-4 md:py-8 xl:py-12">
-							<div className="fixed phone-xl:relative left-0 bottom-0 phone-xl:bg-transparent bg-white w-full flex justify-center phone-xl:justify-end py-4 phone-xl:py-0 pr-4">
+							<div className="fixed phone-xl:relative left-0 bottom-0 phone-xl:bg-transparent bg-white w-full flex justify-center phone-xl:justify-end py-4 phone-xl:py-0 phone-xl:pr-4">
 								<Link to={`/posts/${postId - 1}`}>
 									<button disabled={postId <= range[0]} className="bg-tapio text-white p-2 rounded-full mr-2 duration-200 disabled:opacity-50">
 										<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
