@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import pexels from '../api/pexels';
@@ -33,6 +34,8 @@ export function PostList(): JSX.Element {
 	const currentPosts = chunks.slice(indexOfFirstBlock, indexOfLastBlock);
 
 	const { showModal, setShowModalTrue } = useContext(ModalContext);
+
+	const navigate = useNavigate();
 
 	// Fetch posts from DB or JSONPlaceholder
 	useEffect(() => {
@@ -119,7 +122,11 @@ export function PostList(): JSX.Element {
 							{chunk.map((post, post_index) => (
 								<div key={post.id} className={(index % 2 === 0 && post_index === 0) || (index % 2 !== 0 && post_index === 2) ? 'w-full h-[14rem] my-4 ' : 'w-full md:w-1/2 h-[28rem] my-4 '}>
 									<div
-										className="py-6 px-8 mx-4 my-4 h-full rounded-xl custom-shadow duration-500 bg-tapio bg-cover bg-center bg-no-repeat"
+										onClick={(event) => {
+											event.stopPropagation();
+											navigate(`/posts/${post.id}`);
+										}}
+										className="py-6 px-8 mx-4 my-4 h-full rounded-xl custom-shadow duration-500 bg-tapio bg-cover bg-center bg-no-repeat cursor-pointer"
 										style={{
 											backgroundImage: `url(${images[post.id]?.src?.[(index % 2 === 0 && post_index === 0) || (index % 2 !== 0 && post_index === 2) ? 'large2x' : 'large'] || 'https://images.pexels.com/photos/2662792/pexels-photo-2662792.jpeg'})`,
 										}}
@@ -138,7 +145,7 @@ export function PostList(): JSX.Element {
 					))
 				) : (
 					<div className="flex justify-center items-center w-full py-2 h-[32rem]">
-						<div className="loader bg-white">
+						<div className="loader">
 							<span className="dot"></span>
 							<div className="dots">
 								<span></span>
