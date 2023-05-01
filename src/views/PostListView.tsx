@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -13,11 +13,10 @@ import { NewPostForm } from '../components/NewPostForm';
 import logoTapio from '../assets/images/logoTapio.png';
 import iconTapio from '../assets/images/iconTapio.png';
 
-import { ModalContext } from '../context/modalContext';
-
 import { Post, Image } from '../types/types';
+import { Modal } from '../components/Modal';
 
-export function PostList(): JSX.Element {
+export function PostListView(): JSX.Element {
 	const [posts, setPosts] = useState<Post[]>([]);
 	const [editingPost, setEditingPost] = useState<Post | null>(null); // currently edited post
 	const [chunks, setChunks] = useState<Post[][]>([]); // 3 posts
@@ -33,9 +32,10 @@ export function PostList(): JSX.Element {
 
 	const currentPosts = chunks.slice(indexOfFirstBlock, indexOfLastBlock);
 
-	const { showModal, setShowModalTrue } = useContext(ModalContext);
-
 	const navigate = useNavigate();
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const closeModal = () => setIsModalOpen(false);
 
 	// Fetch posts from DB or JSONPlaceholder
 	useEffect(() => {
@@ -95,12 +95,12 @@ export function PostList(): JSX.Element {
 
 	return (
 		<>
-			<div className={`lg:w-10/12 2xl:w-3/4 mx-auto flex flex-wrap items-center h-screen relative ${showModal ? ' z-0' : 'z-10'}`}>
+			<div className={`lg:w-10/12 2xl:w-3/4 mx-auto flex flex-wrap items-center h-screen relative ${isModalOpen ? ' z-0' : 'z-10'}`}>
 				<div className="flex justify-center w-full">
 					<img className="h-32 md:h-44" src={logoTapio} alt="logo-tapio-stories" />
 				</div>
 				<div className="fixed phone-xl:relative left-0 bottom-0 phone-xl:bg-transparent bg-white w-full flex justify-center phone-xl:justify-end py-4 phone-xl:py-0 phone-xl:pr-4 z-10">
-					<button onClick={() => setShowModalTrue()} className="bg-white text-tapio p-2 rounded-full mr-2 duration-200 mr-4 shadow">
+					<button onClick={() => setIsModalOpen(true)} className="bg-white text-tapio p-2 rounded-full mr-2 duration-200 mr-4 shadow">
 						<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
 							<path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
 						</svg>
@@ -159,7 +159,9 @@ export function PostList(): JSX.Element {
 					<img className="h-12 opacity-40" src={iconTapio} alt="icon-tapio-stories" />
 				</div>
 			</div>
-			<NewPostForm posts={posts} setPosts={setPosts} />
+			<Modal isVisible={isModalOpen} closeModal={closeModal}>
+				<NewPostForm closeModal={closeModal} posts={posts} setPosts={setPosts} />
+			</Modal>
 		</>
 	);
 }

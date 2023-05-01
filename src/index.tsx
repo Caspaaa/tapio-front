@@ -5,14 +5,11 @@ import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 
 import 'react-toastify/dist/ReactToastify.css';
-import ModalContextComponent from './context/modalContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
 	<React.StrictMode>
-		<ModalContextComponent>
-			<App />
-		</ModalContextComponent>
+		<App />
 	</React.StrictMode>
 );
 

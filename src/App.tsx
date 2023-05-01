@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import { PostList } from './views/PostListView';
+import { PostListView } from './views/PostListView';
 import { PostView } from './views/PostView';
 
 export function App(): JSX.Element {
@@ -9,7 +9,7 @@ export function App(): JSX.Element {
 		<Router>
 			<div className="mx-auto">
 				<Routes>
-					<Route path="/" element={<PostList />} />
+					<Route path="/" element={<PostListView />} />
 					<Route path="/posts/:id" element={<PostView />} />
 				</Routes>
 			</div>
