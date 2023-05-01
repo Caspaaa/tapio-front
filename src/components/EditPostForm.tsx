@@ -59,6 +59,7 @@ export function EditPostForm({ post, posts, setPosts, onUpdated, onEdit }: EditP
 							setTitle(event.target.value);
 						}}
 						className="py-2 px-4 text-gray-600 rounded-lg w-full focus:outline-none"
+						maxLength={200}
 					/>
 				</div>
 				<div className="w-full flex-grow mt-4">
@@ -69,6 +70,7 @@ export function EditPostForm({ post, posts, setPosts, onUpdated, onEdit }: EditP
 							setBody(event.target.value);
 						}}
 						className="py-2 px-4 text-gray-600 rounded-lg h-full w-full focus:outline-none resize-none overflow-scroll-y"
+						maxLength={2500}
 					/>
 				</div>
 			</div>
