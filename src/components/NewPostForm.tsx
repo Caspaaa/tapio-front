@@ -18,16 +18,19 @@ interface NewPostFormProps {
 export function NewPostForm({ posts, setPosts, closeModal }: NewPostFormProps): JSX.Element {
 	const [title, setTitle] = useState('');
 	const [body, setBody] = useState('');
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const createPost = async (event: React.FormEvent) => {
 		event.preventDefault();
 
 		try {
+			setIsLoading(true);
 			const response = await axios.post<Post>(`${process.env.REACT_APP_API}/posts`, {
 				userId: 1,
 				title,
 				body,
 			});
+			setIsLoading(false);
 
 			setPosts([response.data, ...posts]);
 
@@ -69,7 +72,7 @@ export function NewPostForm({ posts, setPosts, closeModal }: NewPostFormProps): 
 				</div>
 				<div className="flex justify-end mt-4">
 					<Button action={() => closeModal()} isDisabled={false} classes="bg-gray-50 border-gray-100 hover:bg-gray-100 hover:border-gray-300 text-gray-300 hover:text-gray-400 mr-2" size="h-5 w-5" icon="cross" />
-					<Button action={() => null} isDisabled={false} classes="bg-tapio text-white" size="h-5 w-5" icon="check" />
+					<Button action={() => null} isDisabled={isLoading} classes="bg-tapio text-white" size="h-5 w-5" icon="check" />
 				</div>
 				<div className="w-full flex h-44 justify-center items-end">
 					<img className="h-12 opacity-20" src={iconTapio} alt="icon-tapio-stories" />

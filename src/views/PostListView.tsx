@@ -97,8 +97,8 @@ export function PostListView(): JSX.Element {
 				</div>
 				<div className="fixed phone-xl:relative left-0 bottom-0 phone-xl:bg-transparent bg-white w-full flex justify-center phone-xl:justify-end py-4 phone-xl:py-0 phone-xl:pr-4 z-10">
 					<Button action={() => setIsModalOpen(true)} isDisabled={false} classes="bg-white text-tapio mr-4 shadow" size="h-6 w-6" icon="add" />
-					<Button action={() => setCurrentPage(currentPage - 1)} isDisabled={currentPage === 1} classes="bg-tapio text-white mr-2 disabled:opacity-50" size="h-6 w-6" icon="previous" />
-					<Button action={() => setCurrentPage(currentPage - 1)} isDisabled={currentPage >= currentPosts.length} classes="bg-tapio text-white mr-2 disabled:opacity-50" size="h-6 w-6" icon="next" />
+					<Button action={() => setCurrentPage(currentPage - 1)} isDisabled={currentPage === 1 || isLoading} classes="bg-tapio text-white mr-2 disabled:opacity-50" size="h-6 w-6" icon="previous" />
+					<Button action={() => setCurrentPage(currentPage + 1)} isDisabled={currentPage >= currentPosts.length || isLoading} classes="bg-tapio text-white mr-2 disabled:opacity-50" size="h-6 w-6" icon="next" />
 				</div>
 				{!isLoading ? (
 					currentPosts.map((chunk: Post[], index: number) => (

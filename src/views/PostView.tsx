@@ -16,6 +16,7 @@ export function PostView(): JSX.Element {
 	const { id } = useParams<string>();
 	const [post, setPost] = useState<Post | null>(null);
 	const [images, setImages] = useState<Image[]>([]);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const [postId, setPostId] = useState(0);
 	const [postIds, setPostIds] = useState<number[]>([]);
@@ -35,7 +36,10 @@ export function PostView(): JSX.Element {
 		const fetchPost = async () => {
 			if (!postId) return;
 			try {
+				setIsLoading(true);
 				const response = await axios.get<Post>(`${process.env.REACT_APP_API}/posts/${postId}`);
+				setIsLoading(false);
+
 				setPost(response.data);
 			} catch (error) {
 				console.error('Error fetching post:', error);
@@ -109,8 +113,8 @@ export function PostView(): JSX.Element {
 					<div className="absolute m-auto left-0 right-0 top-[24rem] bg-white w-full phone-xl:w-2/3 sm:w-2/3 px-6 py-4 sm:px-10 md:py-6 xl:px-20 phone-xl:rounded-3xl">
 						<div className="py-4 md:py-8 xl:py-12">
 							<div className="fixed phone-xl:relative left-0 bottom-0 phone-xl:bg-transparent bg-white w-full flex justify-center phone-xl:justify-end py-4 phone-xl:py-0 phone-xl:pr-4">
-								<Button action={() => prevPost()} isDisabled={postId >= postIds[0]} classes="bg-tapio text-white  mr-2 disabled:opacity-50" size="h-6 w-6" icon="previous" />
-								<Button action={() => nextPost()} isDisabled={postId <= postIds[postIds.length - 1]} classes="bg-tapio text-white mr-2 disabled:opacity-50 rotate-180" size="h-6 w-6" icon="next" />
+								<Button action={() => prevPost()} isDisabled={postId >= postIds[0] || isLoading} classes="bg-tapio text-white  mr-2 disabled:opacity-50" size="h-6 w-6" icon="previous" />
+								<Button action={() => nextPost()} isDisabled={postId <= postIds[postIds.length - 1] || isLoading} classes="bg-tapio text-white mr-2 disabled:opacity-50" size="h-6 w-6" icon="next" />
 							</div>
 							<img className="h-8" src={tapioStory} alt="icon-tapio-stories" />
 							<h1 className="text-3xl sm:text-[2rem] md:text-[3rem] xl:text-[3.5rem] font-bold leading-tight">{post.title}</h1>
