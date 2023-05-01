@@ -119,7 +119,7 @@ export function PostView(): JSX.Element {
 							<img className="h-8" src={tapioStory} alt="icon-tapio-stories" />
 							<h1 className="text-3xl sm:text-[2rem] md:text-[3rem] xl:text-[3.5rem] font-bold leading-tight">{post.title}</h1>
 						</div>
-						<p className="leading-relaxed">{post.body.repeat(5)}</p>
+						<p className="leading-[2.2rem] text-lg font-merriweather">{post.body.repeat(5)}</p>
 						<PostComments postId={post.id} />
 					</div>
 				</div>

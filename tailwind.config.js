@@ -7,6 +7,9 @@ module.exports = {
 				tapio: 'var(--tapio)',
 				'tapio-darker': 'var(--darker)',
 			},
+			fontFamily: {
+				merriweather: ['Merriweather', 'sans-serif'],
+			},
 		},
 		screens: {
 			'phone-xs': '240px',
