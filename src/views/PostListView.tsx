@@ -1,41 +1,36 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
-import pexels from '../api/pexels';
-
 import { toast } from 'react-toastify';
+import pexels from '../api/pexels';
 
 import { PostTile } from '../components/PostTile';
 import { EditPostForm } from '../components/EditPostForm';
 import { NewPostForm } from '../components/NewPostForm';
-
-import logoTapio from '../assets/images/logoTapio.png';
-import iconTapio from '../assets/images/iconTapio.png';
-
 import { Post, Image } from '../types/types';
 import { Modal } from '../components/Modal';
 import { Loader } from '../components/Loader';
+import { Button } from '../components/Button';
+
+import logoTapio from '../assets/images/logoTapio.png';
+import iconTapio from '../assets/images/iconTapio.png';
 
 export function PostListView(): JSX.Element {
 	const [posts, setPosts] = useState<Post[]>([]);
 	const [editingPost, setEditingPost] = useState<Post | null>(null); // currently edited post
 	const [chunks, setChunks] = useState<Post[][]>([]); // 3 posts
 	const [images, setImages] = useState<Image[]>([]);
-
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
-	const blockPerPage = 4; // 4 sets of 3 posts per page
 
+	const blockPerPage = 4; // 4 sets of 3 posts per page
 	const indexOfLastBlock = currentPage * blockPerPage;
 	const indexOfFirstBlock = indexOfLastBlock - blockPerPage;
-
 	const currentPosts = chunks.slice(indexOfFirstBlock, indexOfLastBlock);
 
 	const navigate = useNavigate();
 
-	const [isModalOpen, setIsModalOpen] = useState(false);
 	const closeModal = () => setIsModalOpen(false);
 
 	// Fetch posts from DB or JSONPlaceholder
@@ -101,21 +96,9 @@ export function PostListView(): JSX.Element {
 					<img className="h-32 md:h-44" src={logoTapio} alt="logo-tapio-stories" />
 				</div>
 				<div className="fixed phone-xl:relative left-0 bottom-0 phone-xl:bg-transparent bg-white w-full flex justify-center phone-xl:justify-end py-4 phone-xl:py-0 phone-xl:pr-4 z-10">
-					<button onClick={() => setIsModalOpen(true)} className="bg-white text-tapio p-2 rounded-full mr-2 duration-200 mr-4 shadow">
-						<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-							<path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-						</svg>
-					</button>
-					<button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1} className="bg-tapio text-white p-2 rounded-full mr-2 duration-200 disabled:opacity-50">
-						<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-							<path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-						</svg>
-					</button>
-					<button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage >= currentPosts.length} className="bg-tapio text-white p-2 rounded-full mr-2 duration-200 disabled:opacity-50">
-						<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-							<path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-						</svg>
-					</button>
+					<Button action={() => setIsModalOpen(true)} isDisabled={false} classes="bg-white text-tapio mr-4 shadow" size="h-6 w-6" icon="add" />
+					<Button action={() => setCurrentPage(currentPage - 1)} isDisabled={currentPage === 1} classes="bg-tapio text-white mr-2 disabled:opacity-50" size="h-6 w-6" icon="previous" />
+					<Button action={() => setCurrentPage(currentPage - 1)} isDisabled={currentPage >= currentPosts.length} classes="bg-tapio text-white mr-2 disabled:opacity-50" size="h-6 w-6" icon="next" />
 				</div>
 				{!isLoading ? (
 					currentPosts.map((chunk: Post[], index: number) => (

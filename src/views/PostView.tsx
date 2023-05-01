@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
 import { toast } from 'react-toastify';
-
 import pexels from '../api/pexels';
 
+import { Image, Post } from '../types/types';
+
 import { PostComments } from '../components/PostComments';
+import { Button } from '../components/Button';
 
 import iconTapio from '../assets/images/iconTapio.png';
 import tapioStory from '../assets/images/tapio_story.png';
-import { Image, Post } from '../types/types';
 
 export function PostView(): JSX.Element {
 	const { id } = useParams<string>();
@@ -50,8 +50,6 @@ export function PostView(): JSX.Element {
 		const fetchPost = async () => {
 			try {
 				const response = await axios.get<Post[]>(`${process.env.REACT_APP_API}/posts`);
-				// const firstPost = Math.min(...response.data.map((item) => item.id));
-				// const lastPost = Math.max(...response.data.map((item) => item.id));
 				const postIds = [...response.data].map((post) => post.id);
 				setPostIds(postIds);
 			} catch (error) {
@@ -105,26 +103,14 @@ export function PostView(): JSX.Element {
 						onMouseLeave={() => setIsReturnVisible(false)}
 					>
 						<div className={'p-8 duration-200 ' + (isReturnVisible ? 'opacity-100' : 'opacity-0')}>
-							<button onClick={() => navigate('/')} className="bg-tapio text-white p-2 rounded-full mr-2 duration-200 disabled:opacity-50">
-								<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-									<path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-								</svg>
-							</button>
+							<Button action={() => navigate('/')} isDisabled={false} classes="bg-tapio text-white mr-2 disabled:opacity-50" size="h-6 w-6" icon="previous" />
 						</div>
 					</div>
 					<div className="absolute m-auto left-0 right-0 top-[24rem] bg-white w-full phone-xl:w-2/3 sm:w-2/3 px-6 py-4 sm:px-10 md:py-6 xl:px-20 phone-xl:rounded-3xl">
 						<div className="py-4 md:py-8 xl:py-12">
 							<div className="fixed phone-xl:relative left-0 bottom-0 phone-xl:bg-transparent bg-white w-full flex justify-center phone-xl:justify-end py-4 phone-xl:py-0 phone-xl:pr-4">
-								<button onClick={() => prevPost()} disabled={postId >= postIds[0]} className="bg-tapio text-white p-2 rounded-full mr-2 duration-200 disabled:opacity-50">
-									<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-										<path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-									</svg>
-								</button>
-								<button onClick={() => nextPost()} disabled={postId <= postIds[postIds.length - 1]} className="bg-tapio text-white p-2 rounded-full mr-2 duration-200 disabled:opacity-50">
-									<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-										<path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-									</svg>
-								</button>
+								<Button action={() => prevPost()} isDisabled={postId >= postIds[0]} classes="bg-tapio text-white  mr-2 disabled:opacity-50" size="h-6 w-6" icon="previous" />
+								<Button action={() => nextPost()} isDisabled={postId <= postIds[postIds.length - 1]} classes="bg-tapio text-white mr-2 disabled:opacity-50 rotate-180" size="h-6 w-6" icon="next" />
 							</div>
 							<img className="h-8" src={tapioStory} alt="icon-tapio-stories" />
 							<h1 className="text-3xl sm:text-[2rem] md:text-[3rem] xl:text-[3.5rem] font-bold leading-tight">{post.title}</h1>
