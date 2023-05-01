@@ -15,6 +15,7 @@ import iconTapio from '../assets/images/iconTapio.png';
 
 import { Post, Image } from '../types/types';
 import { Modal } from '../components/Modal';
+import { Loader } from '../components/Loader';
 
 export function PostListView(): JSX.Element {
 	const [posts, setPosts] = useState<Post[]>([]);
@@ -144,15 +145,8 @@ export function PostListView(): JSX.Element {
 						</div>
 					))
 				) : (
-					<div className="flex justify-center items-center w-full py-2 h-[32rem]">
-						<div className="loader">
-							<span className="dot"></span>
-							<div className="dots">
-								<span></span>
-								<span></span>
-								<span></span>
-							</div>
-						</div>
+					<div className="w-full py-2 h-[32rem]">
+						<Loader />
 					</div>
 				)}
 				<div className="w-full flex h-44 justify-center items-center pb-40 pt-20 phone-xl:pb-20  phone-xl:pt-20">
