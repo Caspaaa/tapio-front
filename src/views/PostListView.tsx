@@ -132,7 +132,7 @@ export function PostListView(): JSX.Element {
 						<Loader />
 					</div>
 				)}
-				<div className="w-full flex h-44 justify-center items-center pb-40 pt-20 phone-xl:pb-20  phone-xl:pt-20">
+				<div className="w-full flex h-44 justify-center items-center pb-40 pt-20 phone-xl:pb-20 phone-xl:pt-20">
 					<img className="h-12 opacity-40" src={iconTapio} alt="icon-tapio-stories" />
 				</div>
 			</div>

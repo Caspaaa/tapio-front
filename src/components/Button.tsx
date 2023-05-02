@@ -50,7 +50,7 @@ export function Button({ action, isDisabled, icon, classes, size }: ButtonProps)
 	};
 
 	return (
-		<button onClick={(event) => action(event)} disabled={isDisabled} className={`p-2 rounded-full mr-2 duration-200 ${classes}`}>
+		<button type="button" onClick={(event) => action(event)} disabled={isDisabled} className={`p-2 rounded-full mr-2 duration-200 ${classes}`}>
 			{currentSVG()}
 		</button>
 	);
